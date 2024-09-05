@@ -1,6 +1,6 @@
 # pylint: disable=all
 import logging
-from psycopg2 import connect, OperationalError
+from psycopg2 import connect, OperationalError,extras
 
 # Configuração do logger
 logger = logging.getLogger(__name__)
@@ -66,7 +66,7 @@ class DatabaseService:
     def search(self, query, params=None):
         rows = []
         if self.__connection:
-            cursor = self.__connection.cursor()
+            cursor = self.__connection.cursor(cursor_factory=extras.DictCursor)# usando dictcursor  para melhorar o acesso aos dados
             try:
                 cursor.execute(query, params)
                 rows = cursor.fetchall()

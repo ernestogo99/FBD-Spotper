@@ -18,6 +18,7 @@ class InterpreteService:
         sql_query="INSERT INTO interprete(nome,tipo)  VALUES (%s,%s)"
         params=(interprete.nome,interprete.tipo)
         DatabaseService().insert(sql_query,params)
+        return interprete.nome
         
 
 
@@ -28,10 +29,10 @@ def main():
     interprete_service = InterpreteService()
     
     # Chama o método para adicionar o intérprete ao banco
-    interprete_id = interprete_service.add_to_db()
+    interprete_nome = interprete_service.add_to_db()
     
     # Exibe o ID do intérprete inserido
-    print(f"Interprete inserido com sucesso! ID: {interprete_id}")
+    print(f"Interprete inserido com sucesso! ID: {interprete_nome}")
     db_service.close_connection()
 if __name__ == "__main__":
     main()
