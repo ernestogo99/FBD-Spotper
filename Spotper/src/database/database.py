@@ -8,7 +8,7 @@ logger.setLevel(logging.INFO)
 
 class DatabaseService:
     def __init__(self):
-        db_name = "teste"
+        db_name = "spotper"
         db_user = "postgres"
         db_password = "110102ee"
         db_host = "localhost"

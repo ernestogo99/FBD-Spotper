@@ -1,5 +1,5 @@
-from database.database import DatabaseService
-from entidades.interprete import Interprete
+from src.database.database import DatabaseService
+from src.entidades.interprete import Interprete
 
 class InterpreteService:
     def __init__(self):

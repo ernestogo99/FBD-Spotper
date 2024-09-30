@@ -2,7 +2,7 @@
 from database import DatabaseService
 
 
-import uuid
+
 
 class Interprete:
     def __init__(self):
