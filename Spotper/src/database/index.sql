@@ -1,0 +1,1 @@
+create index idx_faixa on faixa(cod_alb);

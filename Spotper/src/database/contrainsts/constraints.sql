@@ -75,7 +75,7 @@ BEGIN
 
 
     IF media_ddd IS NULL THEN
-        media_ddd := 0.0; 
+        RETURN NEW;
     END IF;
 
  
@@ -99,27 +99,33 @@ execute function check_preco_max()
 CREATE OR REPLACE FUNCTION check_meio_fisico (_cod_alb INT, _meio meio_fisico, _tipo_grav gravacao)
 RETURNS BOOLEAN AS $$
 DECLARE
-    tipo_meio meio_fisico;
+    tipo_meio    meio_fisico;
 BEGIN
-
+  
     SELECT meio INTO tipo_meio FROM album
-    WHERE cod_alb = _cod_alb;
+    WHERE cod_alb = _cod_alb and meio=_meio;
 
-
+ 
     IF tipo_meio = 'CD' THEN
-        IF _tipo_grav != 'ADD' AND _tipo_grav != 'DDD' THEN
+        IF _tipo_grav NOT IN ('ADD', 'DDD') THEN
             RAISE EXCEPTION 'Para álbuns em CD, o tipo de gravação deve ser ADD ou DDD. Tipo encontrado: %', _tipo_grav;
         END IF;
         RETURN TRUE;
-   
-    ELSE
+    
+  
+    ELSIF tipo_meio IN ('VINIL', 'DOWNLOAD') THEN
         IF _tipo_grav IS NOT NULL THEN
             RAISE EXCEPTION 'Para álbuns em Vinil ou Download, o tipo de gravação deve ser NULL. Tipo encontrado: %', _tipo_grav;
         END IF;
         RETURN TRUE;
+    
+  
+    ELSE
+        RETURN TRUE;
     END IF;
 END
 $$ LANGUAGE PLPGSQL;
+
 
 ALTER TABLE faixa DROP CONSTRAINT IF EXISTS meio_fisico_gravacao;
 ALTER TABLE faixa ADD CONSTRAINT meio_fisico_gravacao CHECK (check_meio_fisico(cod_alb, meio, tipo_grav));

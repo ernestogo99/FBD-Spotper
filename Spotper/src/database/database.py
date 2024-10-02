@@ -2,7 +2,7 @@
 import logging
 from psycopg2 import connect, OperationalError,extras
 
-# Configuração do logger
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -66,7 +66,7 @@ class DatabaseService:
     def search(self, query, params=None):
         rows = []
         if self.__connection:
-            cursor = self.__connection.cursor(cursor_factory=extras.DictCursor)# usando dictcursor  para melhorar o acesso aos dados
+            cursor = self.__connection.cursor(cursor_factory=extras.DictCursor)
             try:
                 cursor.execute(query, params)
                 rows = cursor.fetchall()

@@ -7,6 +7,11 @@ INSERT INTO gravadora (nome, sede, home_pg) VALUES ('Gravadora Exemplo', 'Cidade
 INSERT INTO album (meio, cod_grav, data_grav, pr_compra, tipo_compra) 
 VALUES ('CD', 1, '2021-01-01', 30.00, 'CD');
 
+INSERT INTO album (meio, cod_grav, data_grav, pr_compra, tipo_compra) 
+VALUES ('VINIL', 1, '2021-01-01', 30.00, 'VINIL');
+
+
+
 INSERT INTO composicao (descricao, tipo) VALUES ('Composição Barroca', 'tipo_exemplo');
 
 

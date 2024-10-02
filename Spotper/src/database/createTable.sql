@@ -36,6 +36,7 @@ CREATE TYPE meio_fisico AS ENUM ('CD', 'VINIL', 'DOWNLOAD');
 
 create table album(
 	cod_alb serial,
+	nome varchar(255),
 	meio meio_fisico,
 	cod_grav integer,
 	descricao text default '',
@@ -49,6 +50,9 @@ create table album(
 	
 )TABLESPACE ts_tertiary
 
+
+
+	
 CREATE TYPE gravacao AS ENUM ( 'ADD', 'DDD' );
 	
 create table faixa(
