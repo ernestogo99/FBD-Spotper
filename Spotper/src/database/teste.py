@@ -35,7 +35,7 @@ class InterpreteService:
 
         if result:
             print(result[0])
-            return result[0]["nome"]  
+            return result[0] 
         
         logger.error(f"Nenhum intérprete de nome '{nome}' encontrado")
         
@@ -43,7 +43,6 @@ class InterpreteService:
         sql_query="delete from interprete where nome = %s"
         params=(nome,)
         DatabaseService().delete(sql_query,params)
-        
 
         
         
@@ -59,7 +58,8 @@ def main():
    
     
     interprete_service.view_all_interpretes()
-    interprete_service.search_by_name("ernestogo")
+    interprete_service.delete_by_name("ernestogo")
+   
     db_service.close_connection()
 if __name__ == "__main__":
     main()
