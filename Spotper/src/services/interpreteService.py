@@ -1,7 +1,7 @@
 # pylint: disable=all
 import logging
-from src.database.database import DatabaseService
-from src.entidades.interprete import Interprete
+from database.database import DatabaseService
+from entidades.interprete import Interprete
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -16,11 +16,11 @@ class InterpreteService:
         DatabaseService().insert(sql_query,params)
         
     def view_all_interpretes(self):
-        sql_query="SELECT nome,tipo FROM interprete"
+        sql_query="SELECT * FROM interprete"
         interpretes=DatabaseService().search(sql_query)
         print("--------INTERPRETES---------")
         for interprete in interpretes:
-            print(interprete["nome"], interprete["tipo"])
+            print(interprete)
         
     def search_by_name(self, nome):
         sql_query = "SELECT nome FROM interprete WHERE nome = %s"
@@ -37,6 +37,16 @@ class InterpreteService:
         sql_query="delete from interprete where nome = %s"
         params=(nome,)
         DatabaseService().delete(sql_query,params)
+        
+    def update_name(self,nome,novo_nome):
+        sql_query = "UPDATE interprete SET nome = %s WHERE nome = %s"
+        params=(nome,novo_nome)
+        DatabaseService().update(sql_query,params)
+        
+    def update_type(self,nome,novo_tipo):
+        sql_query="UPDATE interprete SET tipo= %s where nome =%s"
+        params=(nome,novo_tipo)
+        DatabaseService().update(sql_query,params)
         
         
         

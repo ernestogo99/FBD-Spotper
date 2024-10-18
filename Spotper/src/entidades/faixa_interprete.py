@@ -1,9 +1,8 @@
-from src.enums.enums import MeioFisico
+from enums.enums import MeioFisico
 
 class Faixa_interprete():
-    def __init__(self,cod_faixa,cod_alb,meio:MeioFisico,cod_inter):
-        self.cod_faixa=cod_faixa
-        self.cod_alb=cod_alb
-        self.meio=meio
-        self.cod_inter=cod_inter
-        
+    def __init__(self):
+        self.cod_faixa=int(input("Digite o código da faixa que deseja relacionar ao interprete: "))
+        self.meio=MeioFisico[input("Digite o meio físico (CD, VINIL, DOWNLOAD): ").upper()].value
+        self.cod_alb=int(input("Digite o código do album que deseja relacionar: "))
+        self.cod_inter=int(input("Digite o código do interprete que deseja relacionar: "))

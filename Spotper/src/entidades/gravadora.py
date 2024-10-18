@@ -1,6 +1,3 @@
-class Telefone:
-    def __init__(self,numero):
-        self.numero=numero
 
 class Gravadora:
     def __init__(self):
@@ -13,8 +10,7 @@ class Gravadora:
         
         for i in range(0,quantidade):
             numero=str(input(f"digite o telefone {i+1} da gravadora: "))
-            self.phones.append(Telefone(numero))
+            self.phones.append(numero)
             
-    def add_telefone(self,telefone):
-        self.phones.append(Telefone(telefone))
+   
         

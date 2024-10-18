@@ -22,11 +22,11 @@ class InterpreteService:
         return interprete.nome
 
     def view_all_interpretes(self):
-        sql_query="SELECT nome,tipo FROM interprete"
+        sql_query="SELECT * FROM interprete"
         interpretes=DatabaseService().search(sql_query)
         print("--------INTERPRETES---------")
         for interprete in interpretes:
-            print(interprete["nome"], interprete["tipo"])
+            print(interprete)
             
     def search_by_name(self, nome):
         sql_query = "SELECT * FROM interprete WHERE nome = %s"
@@ -43,6 +43,17 @@ class InterpreteService:
         sql_query="delete from interprete where nome = %s"
         params=(nome,)
         DatabaseService().delete(sql_query,params)
+    
+    def update_name(self,nome,novo_nome):
+        sql_query = "UPDATE interprete SET nome = %s WHERE nome = %s"
+        params=(nome,novo_nome)
+        DatabaseService().update(sql_query,params)
+        
+    def update_type(self,nome,novo_tipo):
+        sql_query="UPDATE interprete SET tipo= %s where nome =%s"
+        params=(nome,novo_tipo)
+        DatabaseService().update(sql_query,params)
+        
 
         
         
@@ -56,9 +67,10 @@ def main():
     
    
    
-    
+    interprete_service.update_name("ernesto","ronison")
+    interprete_service.update_type("pop","ernesto")
     interprete_service.view_all_interpretes()
-    interprete_service.delete_by_name("ernestogo")
+    
    
     db_service.close_connection()
 if __name__ == "__main__":
