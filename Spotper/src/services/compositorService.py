@@ -69,3 +69,21 @@ class CompositorService:
         sql_query = "UPDATE compositor SET dt_morte = %s WHERE nome = %s"
         params = (death_date, nome_compositor)
         DatabaseService().update(sql_query, params)
+
+        
+    def query_3(self):
+        sql_query="""
+                SELECT c.nome AS compositor_nome, COUNT(fp.cod_faixa) AS total_faixas
+                FROM compositor c
+                JOIN faixa_compositor fc ON c.cod_comp = fc.cod_comp
+                JOIN faixa f ON fc.cod_faixa = f.cod_faixa AND fc.cod_alb = f.cod_alb AND fc.meio = f.meio
+                JOIN faixa_playlist fp ON f.cod_faixa = fp.cod_faixa AND f.cod_alb = fp.cod_alb AND f.meio = fp.meio
+                GROUP BY c.nome
+                ORDER BY total_faixas DESC
+                LIMIT 1;
+            """
+        print("-----Compositor  com maior número de faixas na playlist------")
+        compositores=DatabaseService().search(sql_query)
+        for compositor in compositores:
+            print(f"{compositor['compositor_nome']} | {compositor['total_faixas']}")   
+        

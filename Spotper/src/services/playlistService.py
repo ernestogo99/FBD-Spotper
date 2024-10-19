@@ -42,10 +42,32 @@ class PlaylistService:
         return None
         
         
-    def delete_playlist_by_name(self,name):
-        sql_query="delete from playlist where nome = %s"
-        params=(name,)
+    def delete_playlist(self,cod_play):
+        sql_query="delete from playlist where cod_play = %s"
+        params=(cod_play,)
         DatabaseService().delete(sql_query,params)
            
         
-       
+    def query_4(self):
+        sql_query="""
+            SELECT p.nome AS playlist_nome
+            FROM playlist p
+            JOIN faixa_playlist fp ON p.cod_play = fp.cod_play
+            JOIN faixa f ON fp.cod_faixa = f.cod_faixa AND fp.cod_alb = f.cod_alb AND fp.meio = f.meio
+            JOIN composicao c ON f.cod_comp = c.cod_comp
+            JOIN compositor comp ON f.cod_comp = comp.cod_comp
+            JOIN periodo_musical pm ON comp.cod_pm = pm.cod_pm
+            WHERE c.tipo = 'Concerto' 
+            AND pm.descricao = 'barroco'
+            GROUP BY p.nome,p.cod_play
+            HAVING COUNT(f.cod_faixa) = (
+            SELECT COUNT(fp2.cod_faixa)
+            FROM faixa_playlist fp2
+            WHERE fp2.cod_play = p.cod_play
+            );
+        """
+        print("Playlists cujas faixas tem tipo de composição concerto e barroco")
+        playlists=DatabaseService().search(sql_query)
+        for playlist in playlists:
+            print(f"{playlist['playlist_nome']}")
+        

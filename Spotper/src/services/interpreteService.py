@@ -33,19 +33,19 @@ class InterpreteService:
         
         logger.error(f"Nenhum intérprete de nome '{nome}' encontrado")
         
-    def delete_by_name(self,nome):
-        sql_query="delete from interprete where nome = %s"
-        params=(nome,)
+    def delete_interprete(self,cod_inter):
+        sql_query="delete from interprete where cod_inter = %s"
+        params=(cod_inter,)
         DatabaseService().delete(sql_query,params)
         
-    def update_name(self,nome,novo_nome):
-        sql_query = "UPDATE interprete SET nome = %s WHERE nome = %s"
-        params=(nome,novo_nome)
+    def update_name(self,cod_inter,novo_nome):
+        sql_query = "UPDATE interprete SET nome = %s WHERE cod_inter = %s"
+        params=(novo_nome,cod_inter)
         DatabaseService().update(sql_query,params)
         
-    def update_type(self,nome,novo_tipo):
-        sql_query="UPDATE interprete SET tipo= %s where nome =%s"
-        params=(nome,novo_tipo)
+    def update_type(self,cod_inter,novo_tipo):
+        sql_query="UPDATE interprete SET tipo= %s where cod_inter =%s"
+        params=(novo_tipo,cod_inter)
         DatabaseService().update(sql_query,params)
         
         

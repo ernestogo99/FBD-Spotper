@@ -66,3 +66,15 @@ class AlbumService:
         for faixa in faixas_album:
              print(f"{faixa['cod_alb']} | {faixa['nome']} | {faixa['descricao']} | {faixa['cod_faixa']} ") 
         
+        
+    def query_1(self):
+        sql_query="""
+           SELECT nome, pr_compra
+            FROM album
+            WHERE pr_compra > (SELECT AVG(pr_compra) FROM album);
+        """
+        albums=DatabaseService().search(sql_query)
+        print("-------ALBUMS E PREÇOS MAIORES QUE A MÉDIA--------")
+        for album in albums:
+            print(f"{album['nome']} | {album['pr_compra']}")
+        

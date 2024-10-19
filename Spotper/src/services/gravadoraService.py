@@ -50,19 +50,38 @@ class GravadoraService:
         logger.error(f"nenhuma gravadora com nome {name} encontrada")
         
         
-    def delete_grav_by_name(self,name):
-        sql_query="delete from gravadora where nome= %s"
-        params=(name,)
+    def delete_grav(self,cod_grav):
+        sql_query="delete from gravadora where cod_grav= %s"
+        params=(cod_grav,)
         DatabaseService().delete(sql_query,params)
         
-    def update_sede_grav_by_name(self,sede,name):
-        sql_query="update gravadora set sede = %s where nome =%s"
-        params=(sede,name)
+    def update_sede(self,sede,cod_grav):
+        sql_query="update gravadora set sede = %s where cod_grav =%s"
+        params=(sede,cod_grav)
         DatabaseService().update(sql_query,params)
         
-    def update_homepg_grav(self,home_pg,name):
-        sql_query="update gravadora set home_pg =%s where nome =%s"
-        params=(home_pg,name)
+    def update_homepg(self,home_pg,cod_grav):
+        sql_query="update gravadora set home_pg =%s where cod_grav =%s"
+        params=(home_pg,cod_grav)
         DatabaseService().update(sql_query,params)
         
-    
+    def query_2(self):
+        sql_query="""
+                SELECT g.nome, COUNT(DISTINCT p.cod_play) AS total_playlists
+                FROM gravadora g
+                JOIN album a ON g.cod_grav = a.cod_grav
+                JOIN faixa f ON a.cod_alb = f.cod_alb AND a.meio = f.meio
+                JOIN faixa_compositor fc ON f.cod_faixa = fc.cod_faixa AND f.cod_alb = fc.cod_alb AND f.meio = fc.meio
+                JOIN compositor c ON fc.cod_comp = c.cod_comp
+                JOIN faixa_playlist fp ON f.cod_faixa = fp.cod_faixa AND f.cod_alb = fp.cod_alb AND f.meio = fp.meio
+                JOIN playlist p ON fp.cod_play = p.cod_play
+                WHERE c.nome = 'Dvorack'
+                GROUP BY g.nome
+                ORDER BY total_playlists DESC
+                LIMIT 1;
+        """
+        print("--------Gravadora com maior número de playlist ---------")
+        gravadoras=DatabaseService().search(sql_query)
+        for gravadora in gravadoras:
+            print(f"{gravadora['nome']} | {gravadora['total_playlists']}")
+            

@@ -7,7 +7,7 @@ class FaixaCompositorService:
     def __init__(self):
         pass
     
-    def add_to_db(self,):
+    def add_to_db(self):
         faixa_compositor=Faixa_compositor()
         sql_query="insert into faixa_compositor (cod_faixa,meio,cod_alb,cod_comp) values (%s,%s,%s,%s)"
         params=(faixa_compositor.cod_faixa,faixa_compositor.meio,faixa_compositor.cod_alb,faixa_compositor.cod_compositor)
