@@ -22,7 +22,8 @@ class FaixaService:
             new_grav=str(input("Você gostaria de adicionar uma nova gravadora no álbum? (sim/não): ").strip().lower())
             if new_grav=='sim':
                 album_id = album_service.add_to_db(new_grav=True) 
-            album_id = album_service.add_to_db() 
+            else:
+                album_id = album_service.add_to_db() 
             
         else:
             album_service = AlbumService()
