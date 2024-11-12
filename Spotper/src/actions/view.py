@@ -92,7 +92,7 @@ def view_faixa_interprete():
     FaixaInterpreteService().view_faixa_interprete()
     
 def view_faixa_playlist():
-    FaixaPlaylistService().view_faixas_in_playlist()
+    FaixaPlaylistService().view_faixas_with_playlist()
     
 def view_gravadoras():
     GravadoraService().view_all_grav()

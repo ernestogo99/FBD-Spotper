@@ -4,6 +4,7 @@ from services.faixaService import FaixaService
 from services.gravadoraService import GravadoraService
 from services.interpreteService import InterpreteService
 from services.compositorService import CompositorService
+from services.playlistService import PlaylistService
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -16,6 +17,7 @@ def update():
         print("3-Gravadora")
         print("4-Interprete")
         print("5-Compositor")
+        print("6-Playlist")
         print("0-voltar")
         
         option = input("\nDigite a opção desejada: ")
@@ -34,6 +36,9 @@ def update():
                 
             case "5":
                 update_compositor()
+            
+            case "6":
+                playlist_update_maintance()
                 
             case "0":
                 return
@@ -73,3 +78,7 @@ def update_interprete():
     
 def update_compositor():
     CompositorService().update_death_date()
+    
+def playlist_update_maintance():
+    option=int(input("Digite 1 para adicionar uma música na playlist e 2 para remover "))
+    PlaylistService().playlist_maintance(option)
