@@ -1,6 +1,5 @@
 from utils.timeUtils import input_data
 
-
 class Compositor:
     def __init__(self):
         self.nome=str(input("Digite o nome do compositor: "))

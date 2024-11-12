@@ -10,6 +10,7 @@ from services.gravadoraService import GravadoraService
 from services.interpreteService import InterpreteService
 from services.periodoMusicalService import PeriodoMusicalService
 from services.playlistService import PlaylistService
+from utils.enumsUtils import check_meio_fisico
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -87,7 +88,13 @@ def add_faixa_interprete():
     FaixaInterpreteService().add_to_db()
     
 def add_faixa_playlist():
-    FaixaPlaylistService().add_to_db()
+    FaixaService().view_all_faixas()
+    cod_faixa=int(input("Digite o código da faixa que deseja adicionar: "))
+    meio=check_meio_fisico("Digite o  meio físico da faixa  escolhida: ")
+    cod_album=int(input("Digite o código do album pertencente a faixa escolhida:"))
+    PlaylistService().view_playlists()
+    cod_play=int(input("Digite o código da playlist que deseja adicionar na faixa: "))
+    FaixaPlaylistService().add_to_db(cod_faixa,meio,cod_album,cod_play)
     
 def add_faixa():
     FaixaService().add_to_db()

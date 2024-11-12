@@ -66,6 +66,18 @@ class AlbumService:
         for faixa in faixas_album:
              print(f"{faixa['cod_alb']} | {faixa['nome']} | {faixa['descricao']} | {faixa['cod_faixa']} ") 
         
+    def show_faixas_by_album(self,cod_alb):
+        sql_query="""
+            select a.cod_alb,a.nome,f.descricao,f.cod_faixa from faixa f inner join
+            album a on a.cod_alb=f.cod_alb where a.cod_alb=%s
+        """ 
+        params=(cod_alb,)
+        faixas_album=DatabaseService().search(sql_query,params)
+        print("-----FAIXAS E ALBUMS------")
+        for faixa in faixas_album:
+             print(f"{faixa['cod_alb']} | {faixa['nome']} | {faixa['descricao']} | {faixa['cod_faixa']} ") 
+        return faixas_album
+        
         
     def query_1(self):
         sql_query="""
