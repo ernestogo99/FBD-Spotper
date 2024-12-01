@@ -24,16 +24,17 @@ class PlaylistService:
         
         logger.error("Erro ao inserir playlist")
         return None
-        
-    def view_playlists(self):
+    
+   
+    def view_playlists():
         sql_query="select * from playlist"
         playlists=DatabaseService().search(sql_query)
         print("---------PLAYLISTS----------")
         for playlist in playlists:
             print(playlist)
       
-      
-    def view_playlist_by_name(self,name):
+    @staticmethod  
+    def view_playlist_by_name(name):
         sql_query="select * from playlist where nome = %s"  
         params=(name,)
         result=DatabaseService().search(sql_query,params)
@@ -45,11 +46,12 @@ class PlaylistService:
         logger.error("Playlist não encontrada")
         return None
         
-        
-    def delete_playlist(self,cod_play):
+    @staticmethod    
+    def delete_playlist(cod_play):
         sql_query="delete from playlist where cod_play = %s"
         params=(cod_play,)
         DatabaseService().delete(sql_query,params)
+     
      
     def view_faixas_in_playlist_by_id(self,cod_play):
         sql_query="select fp.cod_faixa,p.cod_play,p.nome from playlist p inner join faixa_playlist fp on fp.cod_play=p.cod_play where p.cod_play=%s"
@@ -69,7 +71,7 @@ class PlaylistService:
             cod_alb=AlbumService().search_by_description(descricao)
             faixas=AlbumService().show_faixas_by_album(cod_alb)
             if len(faixas)==0:
-                print("Este álbum não possui faixas.")
+                logger.error("Este álbum não possui faixas.")
                 return
             meio=check_meio_fisico("Digite o meio físico (CD, VINIL, DOWNLOAD): ")
             cod_faixa=int(input("Digite o código da faixa que deseja adicionar a playlist: "))
@@ -78,13 +80,13 @@ class PlaylistService:
             cod_play=int(input("Selecione o código da playlist para visualizar suas músicas: "))
             faixas=self.view_faixas_in_playlist_by_id(cod_play)
             if len(faixas)==0:
-                print("Essa playlist não possui faixas")
+                logger.error("Essa playlist não possui faixas")
                 return 
             cod_faixa=int(input("Digite o código da faixa que deseja remover da playlist: "))
             FaixaPlaylistService().delete_faixas_in_playlist(cod_faixa)
             
-             
-    def query_4(self):
+    @staticmethod         
+    def query_4():
         sql_query="""
             SELECT p.nome AS playlist_nome
             FROM playlist p

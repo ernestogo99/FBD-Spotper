@@ -58,11 +58,11 @@ def del_gravadora():
     
     
 def del_interprete():
-    InterpreteService().view_all_interpretes()
+    InterpreteService.view_all_interpretes()
     cod_interprete=int(input("Digite o código do interprete que deseja excluir: "))
-    InterpreteService().delete_interprete(cod_interprete)
+    InterpreteService.delete_interprete(cod_interprete)
     
 def del_playlist():
     PlaylistService().view_playlists()
     cod_play=int(input("Digite o código da playlist que deseja excluir"))
-    PlaylistService().delete_playlist(cod_play)
+    PlaylistService.delete_playlist(cod_play)

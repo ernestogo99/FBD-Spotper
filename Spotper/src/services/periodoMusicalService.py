@@ -21,15 +21,17 @@ class PeriodoMusicalService:
         else:
             logger.error("Erro ao inserir período musical")
             return None
-        
-    def view_all_PM(self):
+    
+    @staticmethod    
+    def view_all_PM():
         sql_query="select * from periodo_musical"
         periodos=DatabaseService().search(sql_query)
         print("--------PERIODOS MUSICAIS---------")
         for periodo in periodos:
             print(periodo)
-        
-    def search_by_description(self, descricao):
+            
+    @staticmethod  
+    def search_by_description(descricao):
         sql_query = "SELECT * FROM periodo_musical WHERE descricao::TEXT ILIKE %s"
         params = ('%' + descricao + '%',)  
         result = DatabaseService().search(sql_query, params)

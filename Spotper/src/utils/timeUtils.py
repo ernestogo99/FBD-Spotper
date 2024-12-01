@@ -16,3 +16,6 @@ def input_time(prompt):
             return datetime.strptime(time_str,"%H:%M:%S").time()
         except ValueError:
             print("Formato de tempo inválido, Tente novamente.")
+            
+def formatar_interv_tempo(inicio, fim):
+        return f"[{inicio},{fim}]"

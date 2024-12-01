@@ -22,7 +22,7 @@ class CompositorService:
             
             
         else:
-            PeriodoMusicalService().view_all_PM()
+            PeriodoMusicalService.view_all_PM()
             cod_periodo = int(input("Veja o código do período musical que você deseja relacionar o compositor e coloque aqui: "))
         
         if compositor.dt_morte is not None:

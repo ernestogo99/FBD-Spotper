@@ -69,12 +69,12 @@ def update_gravadora():
     GravadoraService().update_sede(cod_grav,nova_sede)
     
 def update_interprete():
-    InterpreteService().view_all_interpretes()
+    InterpreteService.view_all_interpretes()
     cod_inter=int(input("Digite o código do interprete que deseja atualizar: "))
     new_name=str(input("Digite o novo nome do interprete: "))
     new_type=str(input("Digite o novo tipo do interprete: "))
-    InterpreteService().update_name(cod_inter,new_name)
-    InterpreteService().update_type(cod_inter,new_type)
+    InterpreteService.update_name(cod_inter,new_name)
+    InterpreteService.update_type(cod_inter,new_type)
     
 def update_compositor():
     CompositorService().update_death_date()

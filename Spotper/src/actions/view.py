@@ -98,10 +98,10 @@ def view_gravadoras():
     GravadoraService().view_all_grav()
     
 def view_interprete():
-    InterpreteService().view_all_interpretes()
+    InterpreteService.view_all_interpretes()
     
 def view_periodo_musical():
-    PeriodoMusicalService().view_all_PM()
+    PeriodoMusicalService.view_all_PM()
     
 def view_playlist():
     PlaylistService().view_playlists()
@@ -109,6 +109,6 @@ def view_playlist():
 def view_queries():
     GravadoraService().query_2()
     CompositorService().query_3()
-    PlaylistService().query_4()
+    PlaylistService.query_4()
     AlbumService().query_1()
     return

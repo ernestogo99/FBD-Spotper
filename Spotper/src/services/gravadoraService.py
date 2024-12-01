@@ -21,18 +21,19 @@ class GravadoraService:
         if result:
             cod_grav = result["cod_grav"]
             
-           
+            params=[]
             for phone in gravadora.phones:
-                sql_query = "INSERT INTO telefone_gravadora (cod_grav, numero) VALUES (%s, %s)"
-                params = (cod_grav, phone)
-                DatabaseService().insert(sql_query, params)
-            
+                params.append((cod_grav, phone))
+               
+            sql_query = "INSERT INTO telefone_gravadora (cod_grav, numero) VALUES (%s, %s)"
+            DatabaseService().insert_many(sql_query, params)
             logger.info(f"Gravadora '{gravadora.nome}' e seus telefones foram inseridos com sucesso.")
             return cod_grav
        
         logger.error("Erro ao inserir a gravadora.")
         return None
     
+    @staticmethod
     def view_all_grav(self):
         sql_query="select * from gravadora"
         gravadoras=DatabaseService().search(sql_query)
