@@ -31,6 +31,7 @@ def view():
         print("11 - Playlists")
         print("12- faixas nos albums")
         print("13- Consultas solicitadas")
+        print("14- Gravadoras e seus telefones")
         print("0 - Sair")
 
         option = input("\nDigite a opção desejada: ")
@@ -61,8 +62,9 @@ def view():
             case "12":
                 view_faixas_album()
             case "13":
-                view_queries()    
-            
+                view_queries()            
+            case "14":
+                view_phones()                              
             case "0":
                 return
             case _:
@@ -105,6 +107,9 @@ def view_periodo_musical():
     
 def view_playlist():
     PlaylistService().view_playlists()
+   
+def view_phones():
+    GravadoraService().view_grav_phones()  
     
 def view_queries():
     GravadoraService().query_2()

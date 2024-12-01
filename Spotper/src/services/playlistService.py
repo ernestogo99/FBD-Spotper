@@ -69,7 +69,7 @@ class PlaylistService:
             cod_alb=AlbumService().search_by_description(descricao)
             faixas=AlbumService().show_faixas_by_album(cod_alb)
             if len(faixas)==0:
-                print("Este álbum não possui faixas.")
+                logger.error("Este álbum não possui faixas.")
                 return
             meio=check_meio_fisico("Digite o meio físico (CD, VINIL, DOWNLOAD): ")
             cod_faixa=int(input("Digite o código da faixa que deseja adicionar a playlist: "))
@@ -78,7 +78,7 @@ class PlaylistService:
             cod_play=int(input("Selecione o código da playlist para visualizar suas músicas: "))
             faixas=self.view_faixas_in_playlist_by_id(cod_play)
             if len(faixas)==0:
-                print("Essa playlist não possui faixas")
+                logger.error("Essa playlist não possui faixas")
                 return 
             cod_faixa=int(input("Digite o código da faixa que deseja remover da playlist: "))
             FaixaPlaylistService().delete_faixas_in_playlist(cod_faixa)

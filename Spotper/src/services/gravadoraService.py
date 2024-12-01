@@ -21,12 +21,13 @@ class GravadoraService:
         if result:
             cod_grav = result["cod_grav"]
             
-           
+            params=[]
             for phone in gravadora.phones:
-                sql_query = "INSERT INTO telefone_gravadora (cod_grav, numero) VALUES (%s, %s)"
-                params = (cod_grav, phone)
-                DatabaseService().insert(sql_query, params)
-            
+               params.append((cod_grav,phone))
+                
+               
+            sql_query = "INSERT INTO telefone_gravadora (cod_grav, numero) VALUES (%s, %s)"
+            DatabaseService().insert_many(sql_query, params)
             logger.info(f"Gravadora '{gravadora.nome}' e seus telefones foram inseridos com sucesso.")
             return cod_grav
        
@@ -39,6 +40,16 @@ class GravadoraService:
         print("---------GRAVADORAS-----------")
         for gravadora in gravadoras:
             print(gravadora)
+            
+    def view_grav_phones(self):
+        sql_query="""
+            select grav.nome,tel.numero from telefone_gravadora as tel 
+            inner join gravadora as grav on grav.cod_grav=tel.cod_grav
+        """
+        gravadoras=DatabaseService().search(sql_query)
+        print("-------GRAVADORAS E TELEFONES-------")
+        for gravadora in gravadoras:
+            print(f'{gravadora["nome"]} | {gravadora["numero"]}')
             
     def search_by_name(self,name):
         sql_query="select * from gravadora where nome =%s"

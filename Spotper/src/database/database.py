@@ -29,6 +29,23 @@ class DatabaseService:
             logger.error(f"Error connecting to the database: {error}")
             self.__connection = None
 
+    def insert_many(self, query, params=None,returning=False):
+        if self.__connection:
+            cursor = self.__connection.cursor(cursor_factory=extras.DictCursor)
+            try:
+                cursor.executemany(query, params)
+                self.__connection.commit()
+                if returning:
+                    return cursor.fetchone()
+                return None  
+               
+            except Exception as error:
+                self.__connection.rollback()
+                logger.error(f"Error executing insert: {error}")
+                return None  
+            finally:
+                cursor.close()
+                
     def insert(self, query, params=None,returning=False):
         if self.__connection:
             cursor = self.__connection.cursor(cursor_factory=extras.DictCursor)
