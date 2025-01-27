@@ -60,28 +60,49 @@ class PlaylistService:
             print(f"cod_faixa: {faixa['cod_faixa']} | nome_playlist: {faixa['nome']} | cod_play: {faixa['cod_play']}")
         return faixas   
       
-    def playlist_maintance(self,option):
+    def playlist_maintance(self, option):
         self.view_playlists()
-        if option == 1:
-            cod_play=int(input("Selecione o código da playlist que deseja atualizar: "))
-            AlbumService().show_albums()
-            descricao=str(input("Digite a descrição do album que voce deseja para visualizar suas faixas: "))
-            cod_alb=AlbumService().search_by_description(descricao)
-            faixas=AlbumService().show_faixas_by_album(cod_alb)
-            if len(faixas)==0:
-                logger.error("Este álbum não possui faixas.")
+        if option == 1:  
+            cod_play = int(input("Selecione o código da playlist que deseja atualizar: "))
+            while True:
+                AlbumService().show_albums()
+                descricao = str(input("Digite a descrição do álbum que deseja para visualizar suas faixas (ou 'sair' para finalizar): "))
+                if descricao.lower() == 'sair':
+                    break
+                
+                cod_alb = AlbumService().search_by_description(descricao)
+                faixas = AlbumService().show_faixas_by_album(cod_alb)
+                
+                if len(faixas) == 0:
+                    logger.error("Este álbum não possui faixas.")
+                    continue
+                
+                while True:
+                    meio = check_meio_fisico("Digite o meio físico (CD, VINIL, DOWNLOAD): ")
+                    cod_faixa = int(input("Digite o código da faixa que deseja adicionar à playlist (ou 0 para finalizar este álbum): "))
+                    
+                    if cod_faixa == 0:
+                        break  
+                    
+                    FaixaPlaylistService().add_to_db(cod_faixa, meio, cod_alb, cod_play)
+                    logger.info(f"Faixa {cod_faixa} adicionada à playlist {cod_play}.")
+        
+        else: 
+            cod_play = int(input("Selecione o código da playlist para visualizar suas músicas: "))
+            faixas = self.view_faixas_in_playlist_by_id(cod_play)
+            if len(faixas) == 0:
+                logger.error("Essa playlist não possui faixas.")
                 return
-            meio=check_meio_fisico("Digite o meio físico (CD, VINIL, DOWNLOAD): ")
-            cod_faixa=int(input("Digite o código da faixa que deseja adicionar a playlist: "))
-            FaixaPlaylistService().add_to_db(cod_faixa,meio,cod_alb,cod_play)
-        else:
-            cod_play=int(input("Selecione o código da playlist para visualizar suas músicas: "))
-            faixas=self.view_faixas_in_playlist_by_id(cod_play)
-            if len(faixas)==0:
-                logger.error("Essa playlist não possui faixas")
-                return 
-            cod_faixa=int(input("Digite o código da faixa que deseja remover da playlist: "))
-            FaixaPlaylistService().delete_faixas_in_playlist(cod_faixa)
+            
+            while True:
+                cod_faixa = int(input("Digite o código da faixa que deseja remover da playlist (ou 0 para finalizar): "))
+                if cod_faixa == 0:
+                    break
+                
+                FaixaPlaylistService().delete_faixas_in_playlist(cod_faixa)
+                logger.info(f"Faixa {cod_faixa} removida da playlist {cod_play}.")
+               
+
             
              
     def query_4(self):

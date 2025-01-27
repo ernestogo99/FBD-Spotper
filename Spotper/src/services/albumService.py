@@ -62,7 +62,7 @@ class AlbumService:
             album a on a.cod_alb=f.cod_alb
         """ 
         faixas_album=DatabaseService().search(sql_query)
-        print("-----FAIXAS E ALBUMS------")
+        print("-----ALBUMS E FAIXAS------")
         for faixa in faixas_album:
              print(f"{faixa['cod_alb']} | {faixa['nome']} | {faixa['descricao']} | {faixa['cod_faixa']} ") 
         
@@ -73,7 +73,7 @@ class AlbumService:
         """ 
         params=(cod_alb,)
         faixas_album=DatabaseService().search(sql_query,params)
-        print("-----FAIXAS E ALBUMS------")
+        print("-----ALBUMS E FAIXAS------")
         for faixa in faixas_album:
              print(f"{faixa['cod_alb']} | {faixa['nome']} | {faixa['descricao']} | {faixa['cod_faixa']} ") 
         return faixas_album
